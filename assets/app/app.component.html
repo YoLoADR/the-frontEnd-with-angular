@@ -1,5 +1,20 @@
-<h1>Hello World!</h1>
-
-<p>
-  Ne pas oublier de lancer Mongo -> ouvrir deux fenêtres dans le fichier "bin" de mongo -> une fenêtres avec ./mongod et une autre avec ./mondo -> cela permet de lancer les serveurs mongoDB
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article class="panel panel-default">
+        <div class="panel-body">
+          {{message.content}}
+        </div>
+        <footer class="panel-footer">
+          <div class="author">
+            {{message.author}}
+          </div>
+          <div class="config">
+            <a href="#">Edit</a>
+            <a href="#">Delete</a>
+          </div>
+        </footer>
+      </article>
+    </div>
+  </div>
+</div>
