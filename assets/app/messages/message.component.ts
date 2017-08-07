@@ -23,10 +23,12 @@ import { Message } from "./message.model";
 })
 export class MessageComponent {
     @Input() message : Message; 
-    // @Ouput() permet de transmettre des données en sortie du component - contraireme 
+    // @Ouput() permet de transmettre des données en sortie du component 
     // eventEmitter (méthode Angular) permet de créer, émettre ou écouter un évènement
     @Output() cliqueEdite = new EventEmitter<string>();
 
+    color = 'red';
+    
     editer(){
         this.cliqueEdite.emit('A new value');
     }
