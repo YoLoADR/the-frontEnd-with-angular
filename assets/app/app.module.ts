@@ -12,7 +12,7 @@ import { AuthentificationComponent } from "./auth/authentification.component";
 import { HeaderComponent } from "./header.component";
 
 import { MessageService } from "./messages/message.service";
-import { APP_ROUTES } from "./app.routing";
+import { routing } from "./app.routing";
 
 @NgModule({
     declarations: [
@@ -27,7 +27,7 @@ import { APP_ROUTES } from "./app.routing";
     imports: [
         BrowserModule, 
         FormsModule,
-        RouterModule.forRoot(APP_ROUTES)],
+        routing],
     providers: [MessageService],
     bootstrap: [AppComponent]
 })
