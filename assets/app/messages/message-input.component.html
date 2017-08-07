@@ -1,7 +1,19 @@
 <div class="col-md-8 col-md-offset-2">
-  <div class="form-group">
-    <label for="content"></label>
-    <input type="text" id="content" class="form-control" #input>
-  </div>
-  <button class="btn btn-primary" type="submit" (click)="onSave(input.value)" >Save</button>
+  <!--Angular detecte et peut gèrer directement pour la nous les formulaires-->
+  <!--(!) ngModel-->
+  <!-- #f local référence = à la place de me donner accès au formulaire basique, nous demandons à angular de me donner accès à la partie Javascript qu'il a crée pour nous-->
+  <!--Required : cela vient du HTML5 mais Angular le detecte-->
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="content">Content</label>
+      <input 
+        type="text" 
+        id="content" 
+        ngModel
+        name="content"
+        class="form-control"
+        required>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+  </form>
 </div>
