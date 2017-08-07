@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MessageService } from "./message.service";
+import { Message } from "./message.model";
 
 
 @Component({
@@ -8,8 +10,9 @@ import { Component } from '@angular/core';
 })
 export class MessageInputComponent {
 
-    constructor(){}
-  onSave(value){
-     console.log("Je suis sauvegarder", value);
+    constructor(private messageService: MessageService){}
+  onSave(value : string){
+    const message = new Message(value, "Yohann");
+    this.messageService.addMessage(message);
   }
 }
