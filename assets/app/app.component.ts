@@ -23,9 +23,4 @@ import { Message } from "./messages/message.model";
 export class AppComponent {
     message : Message = new Message("Un message", "Yohann");
 
-    // message : Message = {
-    //     content : "Un message",
-    //     user: "Yohann"
-    // };
-
 }

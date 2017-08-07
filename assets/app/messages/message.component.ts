@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Message } from "./message.model";
 
 
@@ -23,4 +23,12 @@ import { Message } from "./message.model";
 })
 export class MessageComponent {
     @Input() message : Message; 
+    // @Ouput() permet de transmettre des données en sortie du component - contraireme 
+    // eventEmitter (méthode Angular) permet de créer, émettre ou écouter un évènement
+    @Output() cliqueEdite = new EventEmitter<string>();
+
+    editer(){
+        this.cliqueEdite.emit('A new value');
+    }
+
 }
