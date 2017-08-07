@@ -26,8 +26,6 @@ export class MessageComponent {
     // @Ouput() permet de transmettre des données en sortie du component 
     // eventEmitter (méthode Angular) permet de créer, émettre ou écouter un évènement
     @Output() cliqueEdite = new EventEmitter<string>();
-
-    color = 'red';
     
     editer(){
         this.cliqueEdite.emit('A new value');

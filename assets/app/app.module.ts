@@ -13,7 +13,7 @@ import { MessageInputComponent } from "./messages/message-input.component";
         MessageListComponent,
         MessageInputComponent
     ],
-    imports: [BrowserModule, FormsModule],
+    imports: [BrowserModule, FormsModule]
     bootstrap: [AppComponent]
 })
 export class AppModule {
