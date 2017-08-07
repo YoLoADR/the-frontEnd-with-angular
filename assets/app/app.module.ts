@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+
 import { AppComponent } from "./app.component";
 import { MessageComponent } from "./messages/message.component";
 import { MessageListComponent } from "./messages/message-list.component";
@@ -10,6 +12,7 @@ import { AuthentificationComponent } from "./auth/authentification.component";
 import { HeaderComponent } from "./header.component";
 
 import { MessageService } from "./messages/message.service";
+import { APP_ROUTES } from "./app.routing";
 
 @NgModule({
     declarations: [
@@ -21,7 +24,10 @@ import { MessageService } from "./messages/message.service";
         AuthentificationComponent,
         HeaderComponent
     ],
-    imports: [BrowserModule, FormsModule],
+    imports: [
+        BrowserModule, 
+        FormsModule,
+        RouterModule.forRoot(APP_ROUTES)],
     providers: [MessageService],
     bootstrap: [AppComponent]
 })
