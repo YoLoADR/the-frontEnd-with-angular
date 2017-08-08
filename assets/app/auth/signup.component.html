@@ -1,22 +1,43 @@
 <div class="col-md-8 col-md-offset-2">
-  <form>
+  <p>Form value: {{ myForm.value | json }}</p>
+  <p>Form status: {{ myForm.status | json }}</p>
+  <!-- [formGroup]="myForm" on pointe vers le formulaire que l'on souhaite utiliser-->
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="firstName">First Name</label>
       <!--on a pas besoin de mettre l'attribut name="" avec cette méthode-->
-      <input type="text" id="firstName" class="form-control"> 
+      <input 
+        type="text" 
+        id="firstName" 
+        class="form-control"
+        formControlName="firstName"> 
     </div>
     <div class="form-group">
       <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" class="form-control"> 
+      <input 
+        type="text"
+        id="lastName"
+        class="form-control"
+        formControlName="lastName"> 
     </div>
     <div class="form-group">
       <label for="email">E-mail</label>
-      <input type="email" id="email" class="form-control"> 
+      <input 
+        type="email" 
+        id="email" 
+        class="form-control"
+        formControlName="email"> 
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" class="form-control"> 
+      <input 
+        type="password" 
+        id="password" 
+        class="form-control"
+        formControlName="password"> 
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button 
+      class="btn btn-primary" 
+      type="submit">Submit</button>
   </form>
 </div>
