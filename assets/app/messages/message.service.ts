@@ -15,6 +15,8 @@ export class MessageService {
   }
 
   deleteMessage(message: Message){
+    // La méthode splice() modifie le contenu d'un tableau en retirant des éléments et/ou en ajoutant des nouveaux éléments - On retire 1 élément situé à l'index du message en cours
+    // La méthode indexOf() renvoie le premier indice pour lequel on trouve un élément donné dans un tableau.
     this.messages.splice(this.messages.indexOf(message), 1);
   }
   

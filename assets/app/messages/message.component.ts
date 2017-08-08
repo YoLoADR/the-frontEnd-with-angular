@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Message } from "./message.model";
+import { MessageService } from "./message.service";
 
 
 @Component({
@@ -22,6 +23,7 @@ import { Message } from "./message.model";
     `]
 })
 export class MessageComponent {
+    constructor(private messageService: MessageService){}
     @Input() message : Message; 
     // @Ouput() permet de transmettre des données en sortie du component 
     // eventEmitter (méthode Angular) permet de créer, émettre ou écouter un évènement
@@ -29,6 +31,9 @@ export class MessageComponent {
     
     editer(){
         this.cliqueEdite.emit('A new value');
+    }
+    supprimer(){
+        this.messageService.deleteMessage(this.message); //L'input renvoi qu'un message, donc on peut simplement se baser sur lui
     }
 
 }
