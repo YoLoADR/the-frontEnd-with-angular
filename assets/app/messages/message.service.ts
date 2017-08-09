@@ -23,7 +23,9 @@ export class MessageService {
   }
 
   getMessage(){
-    return this.messages;
+    return this.http.get('http://localhost:3000/message')
+      .map((response: Response) => this.messages = response.json())
+      .catch((err: Response) => Observable.throw(err.json()));
   }
 
   deleteMessage(message: Message){
