@@ -25,8 +25,15 @@ export class MessageInputComponent implements OnInit {
     // Si le this.message est null ou undefined ((!) this.message = message du messageService.messageIsEdit) alors ça veut qu'on crée un nouveau message 
     if(this.message){
       this.message.content = form.value.content;
-      //Pour reseter le formulaire
-      this.message = null;
+      this.messageService.updateMessage(this.message).subscribe(
+          data => {
+            console.log(data)
+
+            //Pour reseter le formulaire
+            this.message = null;
+          } ,
+          error => console.error(error)
+        )
     }else{
     const message = new Message(form.value.content, "Yohann");
     this.messageService.addMessage(message)
