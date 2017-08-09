@@ -4,6 +4,22 @@ var router = express.Router();
 // On a besoin d'avoir accès à notre message model pour pouvoir intéragir avec lui (sauvegarder dans la base ect ...)
 var Message = require('../models/message');
 
+router.get('/', function (req, res, next) {
+    Message.find()
+      .exec(function(err, result){
+      if(err){
+        return res.status(500).json({
+          title: 'Une erreur à été detecter',
+          error: err
+        });
+      }
+      res.status(200).json({
+        message: 'message recuperer',
+        obj : result
+      })
+    });
+});
+
 //"post" -> parce que on veut stocker un message grace au server
 router.post('/', function (req, res, next) {
     var message = new Message({

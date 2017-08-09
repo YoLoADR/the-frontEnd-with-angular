@@ -23,7 +23,19 @@ export class MessageService {
   }
 
   getMessage(){
-    return this.messages;
+    return this.http.get('http://localhost:3000/message')
+      .map((response: Response) => {
+        // Comme mongo renvoie des données brute avec des (__), on va recrée un tableau avec une version clean grace a une fonction
+        const messages = response.json().obj;
+        let tranformedMessages: Message[] = [];
+
+        for(let message of messages){
+          tranformedMessages.push(new Message(message.content, 'Yolo', message._id, null));
+        }
+        this.messages = tranformedMessages;
+        return tranformedMessages;
+      })
+      .catch((err: Response) => Observable.throw(err.json()));
   }
 
   deleteMessage(message: Message){
