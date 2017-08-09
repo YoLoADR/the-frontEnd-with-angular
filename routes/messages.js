@@ -5,20 +5,18 @@ var router = express.Router();
 var Message = require('../models/message');
 
 router.get('/', function (req, res, next) {
-    Message.find(function(err, result){
-      //Dans le cas où on a une erreur
+    Message.find()
+      .exec(function(err, result){
       if(err){
         return res.status(500).json({
           title: 'Une erreur à été detecter',
           error: err
         });
       }
-      // status 201 Everythings it's ok
-      res.status(201).json({
+      res.status(200).json({
         message: 'message recuperer',
         obj : result
       })
-
     });
 });
 

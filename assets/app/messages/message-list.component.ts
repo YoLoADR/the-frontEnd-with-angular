@@ -33,14 +33,13 @@ export class MessageListComponent {
     messages : Message[];
     constructor(private messageService: MessageService){}
     ngOnInit(){
-        //this.messages = this.messageService.getMessage();
         this.getMessage();
     }
 
     getMessage(){
         this.messageService.getMessage()
             .subscribe(
-                data => console.log(data) ,
+                (data : Message[]) => this.messages = data ,
                 error => console.error(error)
                 );
     }
