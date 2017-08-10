@@ -44,4 +44,43 @@ router.post('/', function (req, res, next) {
     });
 });
 
+// "patch" -> parce qu'on veut modifier/ réécrire par dessus une data
+router.patch('/:id', function(req, res, next){
+  //(i) Certain paramètre son dans "params" et d'autre dans le "body"
+  Message.findById(req.params.id, function(err, message){
+    //Dans le cas où on a une erreur
+      if(err){
+        return res.status(500).json({
+          title: 'Une erreur à été detecter',
+          error: err
+        });
+      }
+      //Dans le cas où l'on a pas d'erreur mais le message n'est pas trouvé
+      if(! message){
+        return res.status(500).json({
+          title: 'Le message n a pas été detecté',
+          error: {message: 'Message not found'}
+        });
+      }
+      message.content = req.body.content;
+
+      
+      message.save(function(err, result){
+        //Dans le cas où on a une erreur
+        if(err){
+          return res.status(500).json({
+            title: 'Une erreur à été detecter',
+            error: err
+          });
+        }
+        // status 201 Everythings it's ok
+        res.status(201).json({
+          message: 'message enregistrer',
+          obj : result
+        })
+
+      });
+  });
+});
+
 module.exports = router;

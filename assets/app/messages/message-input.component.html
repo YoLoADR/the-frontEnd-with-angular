@@ -3,17 +3,21 @@
   <!--(!) ngModel-->
   <!-- #f local référence = à la place de me donner accès au formulaire basique, nous demandons à angular de me donner accès à la partie Javascript qu'il a crée pour nous-->
   <!--Required : cela vient du HTML5 mais Angular le detecte-->
+   <!--[ngModel] on écoute une entrée un input [] pas une sortie ()-->
+   <!--[ngModel]="message?.content" ==> au départ message est undefined, donc ce code veut dire si message n'est pas undefined il est égale à message.content-->
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
       <label for="content">Content</label>
       <input 
         type="text" 
         id="content" 
-        ngModel
+        [ngModel]="message?.content"
         name="content"
         class="form-control"
         required>
     </div>
+    <!--(X) pas de type="submit" pour éviter qu'il déclenche le formulaire-->
+    <button class="btn btn-danger" type="button" (click)="onClear(f)" >Clear</button>
     <button class="btn btn-primary" type="submit">Save</button>
   </form>
 </div>
