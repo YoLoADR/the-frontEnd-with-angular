@@ -83,4 +83,41 @@ router.patch('/:id', function(req, res, next){
   });
 });
 
+// Similaire à l'update/edite d'une donnée - on a commencé par copier/coller le code
+router.delete('/:id', function(req, res, next){
+ Message.findById(req.params.id, function(err, message){
+    //Dans le cas où on a une erreur
+      if(err){
+        return res.status(500).json({
+          title: 'Une erreur à été detecter',
+          error: err
+        });
+      }
+      //Dans le cas où l'on a pas d'erreur mais le message n'est pas trouvé
+      if(!message){
+        return res.status(500).json({
+          title: 'Le message n a pas été detecté',
+          error: {message: 'Message not found'}
+        });
+      }
+
+      message.remove(function(err, result){
+        //Dans le cas où on a une erreur
+        if(err){
+          return res.status(500).json({
+            title: 'Une erreur à été detecter',
+            error: err
+          });
+        }
+        // status 201 Everythings it's ok
+        res.status(200).json({
+          message: 'message supprumer',
+          obj : result
+        })
+
+      });
+  });
+});
+
+
 module.exports = router;
