@@ -30,7 +30,11 @@ export class MessageComponent {
         this.messageService.editMessage(this.message)
     }
     supprimer(){
-        this.messageService.deleteMessage(this.message); //L'input renvoi qu'un message, donc on peut simplement se baser sur lui
+        this.messageService.deleteMessage(this.message)
+        .subscribe(
+            data => console.log(data) ,
+            error => console.error(error)
+            ); //L'input renvoi qu'un message, donc on peut simplement se baser sur lui
     }
 
 }
