@@ -13,7 +13,7 @@ router.post('/', function (req, res, next) {
     var user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: bcryptjs.hashSync(req.body.password, ),
+      password: bcryptjs.hashSync(req.body.password, 10 ),
       email: req.body.email
     });
 
@@ -25,8 +25,7 @@ router.post('/', function (req, res, next) {
           error: err
         });
       }
-      // status 201 Everythings it's ok
-      res.status(201).json({
+      res.status(200).json({
         message: 'user créer',
         obj : result
       })
