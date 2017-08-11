@@ -20,4 +20,14 @@ export class AuthService {
       .catch((err: Response) => Observable.throw(err.json()));
   }
 
+  signin(user: User){
+    const body = JSON.stringify(user);
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    //(!) Sans l'observable la requête ne part pas - elle est juste parametrer
+    // .map((response: Response) => response.json()) -> retourne automatiquement un observable
+    return this.http.post('http://localhost:3000/user/sigin', body, { headers: headers })
+      .map((response: Response) =>  response.json() )
+      .catch((err: Response) => Observable.throw(err.json()));
+  }
+
 }

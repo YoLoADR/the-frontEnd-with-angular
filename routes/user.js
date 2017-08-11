@@ -33,4 +33,32 @@ router.post('/', function (req, res, next) {
     });
 });
 
+router.post('/sigin', function(req, res, next){
+  // Etape (1) retrouver l'utilisateur
+  // Etape (2) comparer les mots de passe 
+
+  User.findOne(req.body.email, function(err, user){
+    //Dans le cas où on a une erreur
+      if(err){
+        return res.status(500).json({
+          title: 'Une erreur à été detecter',
+          error: err
+        });
+      }
+
+      //Dans le cas où l'on a pas d'erreur mais le message n'est pas trouvé
+      if(!user){
+        return res.status(500).json({
+          title: 'Le user n a pas été trouvé',
+          error: {message: 'user not found'}
+        });
+      }
+      res.status(200).json({
+        message: 'user trouver',
+        obj : user
+      })
+  });
+
+});
+
 module.exports = router;

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from "./user.model";
+import { AuthService } from "./auth.service";
 
 @Component({
     selector: 'app-signin',
@@ -9,9 +11,22 @@ export class SigninComponent {
 
   myForm: FormGroup;
 
+  constructor(private authService: AuthService){}
+
 
     onSubmit(){
-        console.log("mon formulaire", this.myForm);
+        console.log("mon formulaire", this.myForm.value);
+        const user = new User(
+                this.myForm.value.email,
+                this.myForm.value.password
+                );
+                
+        this.authService.signin(user)
+            .subscribe(
+            data => console.log(data) ,
+            error => console.error(error)
+            ); 
+        this.myForm.reset();
     }
 
     // Validators.pattern => RegExp - pour une adresse mail valide 
