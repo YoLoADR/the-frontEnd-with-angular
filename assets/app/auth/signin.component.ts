@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
+
 import { User } from "./user.model";
 import { AuthService } from "./auth.service";
 
@@ -11,7 +13,7 @@ export class SigninComponent {
 
   myForm: FormGroup;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService, private router: Router){}
 
 
     onSubmit(){
@@ -23,7 +25,17 @@ export class SigninComponent {
                 
         this.authService.signin(user)
             .subscribe(
-            data => console.log(data) ,
+                data => {
+                    // On a le choix entre utiliser les cookies ou le localStorage
+                    // Dans notre cas on vas utiliser le localStorage - il y a une fonction native au Javascript .localStorage() permet de stocker dans le navigateur qui se detruit quand on ferme le navigateur
+                    // .localStorage() prend deux paramètre - #1 on défini un nom pour la key de l'objet  - #2 le token qu'on reçoit du server "res.statut(200)""
+                    console.log("data coté front", data);
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    // on nous redirige vers la home page (page de messages)
+                    this.router.navigateByUrl('/');
+                    
+                } ,
             error => console.error(error)
             ); 
         this.myForm.reset();

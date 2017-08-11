@@ -57,7 +57,7 @@ router.post('/sigin', function(req, res, next){
       // va comparer le mots de passe que l'on reçoit de l'utilisateur à celui qui se trouve dans la base
       if(!bcryptjs.compareSync(req.body.password, user.password)){
         return res.status(401).json({
-          title: 'Le user n a pas été trouvé - login failed',
+          title: 'mdp wrong - login failed',
           error: {message: 'user not found - Connexion impossible'}
         });
       }
@@ -67,11 +67,11 @@ router.post('/sigin', function(req, res, next){
       // #2 argument - secret key -> on a mis quelques choses de basic pour l'exemple (secret)
       // #3 argument - {expiresIn: X} -> durée de vie du token en seconde
       var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
-
       res.status(200).json({
         message: 'vous êtes connecter !',
-        obj : token,
-        userId : user._id
+        //token & userId deviennent les valeur coté front
+        token : token,
+        userId : user['_id']
       })
   });
 
