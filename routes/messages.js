@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 // On a besoin d'avoir accès à notre message model pour pouvoir intéragir avec lui (sauvegarder dans la base ect ...)
 var Message = require('../models/message');
@@ -19,6 +20,21 @@ router.get('/', function (req, res, next) {
       })
     });
 });
+
+//Cette est accessible uniquement si on est connecté - on est encastre tous dans un router.use()
+//On va choper de token dans la query parameters url exemple => http://localhost:3000/ma-page/?token=safdgfjldfj 
+router.use('/', function(req, res, next){
+  jwt.verify(req.query.token, 'secret', function(err, decoded){
+    if(err){
+        return res.status(401).json({
+          title: 'Non authentifier',
+          error: err
+        });
+      }
+    next();
+  });
+});
+
 
 //"post" -> parce que on veut stocker un message grace au server
 router.post('/', function (req, res, next) {
