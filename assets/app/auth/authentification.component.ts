@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from "./auth.service";
 
 @Component({
     selector: 'app-authentification',
@@ -8,8 +9,8 @@ import { Component } from '@angular/core';
           <ul class="nav nav-tabs">
           <!-- (!) [routerLink]="['signup']" et non pas [routerLink]="['/signup']"-->
             <li routerLinkActive="active"><a [routerLink]="['signup']">SignUp</a></li>
-            <li routerLinkActive="active"><a [routerLink]="['signin']">SignIn</a></li>
-            <li routerLinkActive="active"><a [routerLink]="['logout']">Logout</a></li>
+            <li routerLinkActive="active" *ngIf="!isLoggedIn()"><a [routerLink]="['signin']">SignIn</a></li>
+            <li routerLinkActive="active" *ngIf="isLoggedIn()"><a [routerLink]="['logout']">Logout</a></li>
           </ul>
         </nav>
       </header>
@@ -21,5 +22,9 @@ import { Component } from '@angular/core';
     styles: [``]
 })
 export class AuthentificationComponent {
+  constructor(private authService: AuthService){}
 
+  isLoggedIn(){
+    return this.authService.isLoggedIn();
+  }
 }

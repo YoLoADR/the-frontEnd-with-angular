@@ -33,4 +33,9 @@ export class AuthService {
   logOut(){
     localStorage.clear();
   }
+
+  //Pour connaitre si l'utilisateur est toujours connecté
+  isLoggedIn(){
+    return localStorage.getItem('token') !== null;
+  }
 }
