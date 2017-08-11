@@ -29,7 +29,6 @@ export class SigninComponent {
                     // On a le choix entre utiliser les cookies ou le localStorage
                     // Dans notre cas on vas utiliser le localStorage - il y a une fonction native au Javascript .localStorage() permet de stocker dans le navigateur qui se detruit quand on ferme le navigateur
                     // .localStorage() prend deux paramètre - #1 on défini un nom pour la key de l'objet  - #2 le token qu'on reçoit du server "res.statut(200)""
-                    console.log("data coté front", data);
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userId', data.userId);
                     // on nous redirige vers la home page (page de messages)
