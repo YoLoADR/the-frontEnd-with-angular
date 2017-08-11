@@ -16,13 +16,21 @@ export class MessageService {
   addMessage(message: Message) {
     const body = JSON.stringify(message);
     const headers = new Headers({ 'Content-Type': 'application/json' });
+    //Si il existe -> On va chercher le token dans le localStorage - Sinon c'est égale à un texte vide
+    const token = localStorage.getItem('token') 
+      ? '?token=' + localStorage.getItem('token')
+      : '';
     //(!) Sans l'observable la requête ne part pas - elle est juste parametrer
     // .map((response: Response) => response.json()) -> retourne automatiquement un observable
-    return this.http.post('http://localhost:3000/message', body, { headers: headers })
+    return this.http.post('http://localhost:3000/message/' + token, body, { headers: headers })
       .map((response: Response) => {
         // Modifier pour faire la différence entre un ajout d'un nouveau message et une modification
         const result = response.json();
-        const message = new Message(result.obj.content, "Yolo", result.obj._id, null);
+        const message = new Message(
+                    result.obj.content,
+                    result.obj.user.firstName,
+                    result.obj._id,
+                    result.obj.user._id);
         this.messages.push(message);
         return message;
       })
@@ -52,7 +60,11 @@ export class MessageService {
   updateMessage(message: Message){
     const body = JSON.stringify(message);
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.patch('http://localhost:3000/message/'+ message.messageId, body, {headers: headers})
+    //Si il existe -> On va chercher le token dans le localStorage - Sinon c'est égale à un texte vide
+    const token = localStorage.getItem('token') 
+      ? '?token=' + localStorage.getItem('token')
+      : '';
+    return this.http.patch('http://localhost:3000/message/'+ message.messageId + token, body, {headers: headers})
       .map((response: Response) => response.json())
       .catch((err: Response) => Observable.throw(err.json()));
     
@@ -62,7 +74,11 @@ export class MessageService {
     // La méthode splice() modifie le contenu d'un tableau en retirant des éléments et/ou en ajoutant des nouveaux éléments - On retire 1 élément situé à l'index du message en cours
     // La méthode indexOf() renvoie le premier indice pour lequel on trouve un élément donné dans un tableau.
     this.messages.splice(this.messages.indexOf(message), 1);
-    return this.http.delete('http://localhost:3000/message/'+ message.messageId)
+    //Si il existe -> On va chercher le token dans le localStorage - Sinon c'est égale à un texte vide
+    const token = localStorage.getItem('token') 
+      ? '?token=' + localStorage.getItem('token')
+      : '';
+    return this.http.delete('http://localhost:3000/message/'+ message.messageId + token)
       .map((response: Response) => response.json())
       .catch((err: Response) => Observable.throw(err.json()));
   }
