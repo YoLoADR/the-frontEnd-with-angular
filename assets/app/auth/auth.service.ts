@@ -30,4 +30,12 @@ export class AuthService {
       .catch((err: Response) => Observable.throw(err.json()));
   }
 
+  logOut(){
+    localStorage.clear();
+  }
+
+  //Pour connaitre si l'utilisateur est toujours connecté
+  isLoggedIn(){
+    return localStorage.getItem('token') !== null;
+  }
 }
