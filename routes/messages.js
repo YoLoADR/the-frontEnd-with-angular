@@ -6,9 +6,10 @@ var jwt = require('jsonwebtoken');
 var Message = require('../models/message');
 var User = require('../models/user');
 
-
+//.populate -> montre le surchargement d'un objet mongo (exemple : lien entre user et data)
 router.get('/', function (req, res, next) {
     Message.find()
+      .populate('user', 'firstName')
       .exec(function(err, result){
       if(err){
         return res.status(500).json({
@@ -104,6 +105,8 @@ Cela va nous permettre de faire une liaison entre les messages et les utilisateu
 
 // "patch" -> parce qu'on veut modifier/ réécrire par dessus une data
 router.patch('/:id', function(req, res, next){
+  // accès au token et au autres données qu'on a sotcké dans le token
+  var decoded = jwt.decode(req.query.token);
   //(i) Certain paramètre son dans "params" et d'autre dans le "body"
   Message.findById(req.params.id, function(err, message){
     //Dans le cas où on a une erreur
@@ -118,6 +121,13 @@ router.patch('/:id', function(req, res, next){
         return res.status(500).json({
           title: 'Le message n a pas été detecté',
           error: {message: 'Message not found'}
+        });
+      }
+      //Refuser -> Si un utilisateur veut modifier le message d'un autre
+      if(message.user != decoded.user._id){
+        return res.status(401).json({
+          title: 'Non authentifier - User do not match',
+          error: {message : 'User do not match'}
         });
       }
       message.content = req.body.content;
@@ -143,6 +153,7 @@ router.patch('/:id', function(req, res, next){
 
 // Similaire à l'update/edite d'une donnée - on a commencé par copier/coller le code
 router.delete('/:id', function(req, res, next){
+  // accès au token et au autres données qu'on a sotcké dans le token
   var decoded = jwt.decode(req.query.token);
   Message.findById(req.params.id, function(err, message){
     //Dans le cas où on a une erreur
@@ -160,13 +171,13 @@ router.delete('/:id', function(req, res, next){
         });
       }
 
-
-        if (message.user != decoded.user._id) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: {message: 'Users do not match'}
-            });
-        }
+      //Refuser -> Si un utilisateur veut modifier le message d'un autre
+      if(message.user != decoded.user._id){
+        return res.status(401).json({
+          title: 'Non authentifier - User do not match',
+          error: {message : 'User do not match'}
+        });
+      }
 
       message.remove(function(err, result){
         //Dans le cas où on a une erreur

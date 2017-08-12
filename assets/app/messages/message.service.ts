@@ -45,7 +45,14 @@ export class MessageService {
         let tranformedMessages: Message[] = [];
 
         for (let message of messages) {
-          tranformedMessages.push(new Message(message.content, 'Yolo', message._id, null));
+          tranformedMessages.push(
+            new Message(
+            message.content, 
+            message.user.firstName, 
+            message._id, 
+            message.user._id
+            )
+          );
         }
         this.messages = tranformedMessages;
         return tranformedMessages;

@@ -37,4 +37,8 @@ export class MessageComponent {
             ); //L'input renvoi qu'un message, donc on peut simplement se baser sur lui
     }
 
+    belongsToUser(){
+        return localStorage.getItem('userId') == this.message.userId;
+    }
+
 }
